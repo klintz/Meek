@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<project name="Meek Framework" default="meek.build" basedir=".">
+	
+	<!-- Properties -->
+	<property name="nant.settings.currentframework" value="net-4.0" />
+	<property name="build.configuration" value="debug" />   
+	<include buildfile="Build.Properties" />
+	<!-- End of Properties -->
+	
+	
+	
+	<!-- Targets -->	
+	<target name="init" failonerror="true">
+		<echo message="Build Script Starting" />
+		<delete dir="${publish.dir}" if="${directory::exists('${publish.dir}')}" />
+		<mkdir dir="${publish.dir}" />				
+	</target>
+	
+	<target name="build.lib" failonerror="true">
+		<foreach item="File" property="filename" >
+			<in>
+				<items>
+					<include name="${solution.dir}\00*.sln" />
+				</items>
+			</in>
+			<do>
+				<echo message="Building ${filename}" />
+				<exec program="${MSBuildPath}">
+					<arg line="/p:Configuration=${build.configuration}"/>
+					<arg line='"${filename}"' />
+				</exec>
+			</do>
+		</foreach> 
+	</target>
+	
+	<target name="copy.build.files" failonerror="true">
+		<copy todir="${publish.lib.dir}" includeemptydirs="true" overwrite="false" verbose="true">
+			<fileset basedir="${assemblies.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>	
+	</target>
+	
+	<target name="meek.build" depends="init" failonerror="true">
+		<echo message="Build Started" />
+		<call target="build.lib" />		
+		<call target="copy.build.files" />		
+		<echo message="Build Completed" />
+	</target>  
+	<!-- End of Targets -->
+	
+</project>

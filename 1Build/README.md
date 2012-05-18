@@ -1,0 +1,8 @@
+## Building Meek in Debug Mode
+
+Execute Debug.Build.bat
+
+
+## Building Meek in Release Mode
+
+ Execute Release.Build.bat

@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "001.WinForms", "001.WinForms", "{7D322EFB-A7A7-47F5-97C1-03C6D4EDFF66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meek.Forms", "..\Meek.Forms\Meek.Forms.csproj", "{B3EF3F4B-D252-4EBE-8E78-9A144BC7ED38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Meek.Forms", "..\Unit.Test\Test.Meek.Forms\Test.Meek.Forms.csproj", "{414B210D-A05D-4D79-9696-AB77D4F9A8DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3EF3F4B-D252-4EBE-8E78-9A144BC7ED38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3EF3F4B-D252-4EBE-8E78-9A144BC7ED38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3EF3F4B-D252-4EBE-8E78-9A144BC7ED38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3EF3F4B-D252-4EBE-8E78-9A144BC7ED38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{414B210D-A05D-4D79-9696-AB77D4F9A8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{414B210D-A05D-4D79-9696-AB77D4F9A8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{414B210D-A05D-4D79-9696-AB77D4F9A8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{414B210D-A05D-4D79-9696-AB77D4F9A8DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B3EF3F4B-D252-4EBE-8E78-9A144BC7ED38} = {7D322EFB-A7A7-47F5-97C1-03C6D4EDFF66}
+		{414B210D-A05D-4D79-9696-AB77D4F9A8DA} = {7D322EFB-A7A7-47F5-97C1-03C6D4EDFF66}
+	EndGlobalSection
+EndGlobal

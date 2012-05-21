@@ -1,8 +1,9 @@
-﻿using System.Data.Objects;
+﻿using System;
+using System.Data.Objects;
 
 namespace Meek.Data.EntityFramework
 {
-    public abstract class DataSession : Common.DataSession
+    public abstract class DataSession : Common.DataSession, IDisposable
     {
         private DataProvider _dataProvider;
 
@@ -27,6 +28,20 @@ namespace Meek.Data.EntityFramework
              :base(provider)
         {
              
+        }
+        
+        public virtual void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                DataProvider.Dispose();
+            }
         }
     }
 }

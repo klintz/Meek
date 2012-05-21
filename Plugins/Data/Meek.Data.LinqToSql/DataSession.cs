@@ -1,8 +1,9 @@
-﻿using System.Data.Linq;
+﻿using System;
+using System.Data.Linq;
 
 namespace Meek.Data.LinqToSql
 {
-    public abstract class DataSession : Common.DataSession
+    public abstract class DataSession : Common.DataSession, IDisposable
     {
         private DataProvider _dataProvider;
 
@@ -28,6 +29,20 @@ namespace Meek.Data.LinqToSql
         protected DataSession(DataProvider provider)
             : base(provider)
         {
+        }
+
+        public virtual void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                DataProvider.Dispose();
+            }
         }
     }
 }

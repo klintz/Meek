@@ -12,6 +12,21 @@ namespace Meek.Data.Common
             Provider = provider;
         }
 
+        public virtual void BeginTransaction()
+        {
+            Provider.BeginTransaction();
+        }
+
+        public virtual void CommitTransaction()
+        {
+            Provider.CommitTransaction();
+        }
+
+        public virtual void RollbackTransaction()
+        {
+            Provider.RollbackTransaction();
+        }
+
         protected virtual void RaiseEvent(string eventName)
         {
             Dispatcher.Current.RaiseEvent(eventName, this, null);

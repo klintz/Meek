@@ -2,5 +2,10 @@
 {
     public interface IDataProvider
     {
+        void BeginTransaction();
+
+        void CommitTransaction();
+
+        void RollbackTransaction();
     }
 }

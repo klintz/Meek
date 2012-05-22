@@ -41,6 +41,5 @@ namespace Meek.Data.Common
         {
             Dispatcher.Current.RaiseEvent(eventName, sender, args);
         }
-
     }
 }

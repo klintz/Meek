@@ -70,9 +70,11 @@
     <Compile Include="Common\DataProvider.cs" />
     <Compile Include="Common\DataProviderFactory.cs" />
     <Compile Include="Common\DataSession.cs" />
+    <Compile Include="DataSessionManager.cs" />
     <Compile Include="IDataProvider.cs" />
     <Compile Include="IDataProviderFactory.cs" />
     <Compile Include="IDataSession.cs" />
+    <Compile Include="IDataSessionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

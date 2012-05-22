@@ -6,6 +6,11 @@ namespace Meek.Business
 {
     public abstract class BaseLogic : ILogic
     {
+        protected IDataSessionFactory DataSessionFactory
+        {
+            get { return DataSessionManager.DataSessionFactory; }
+        }
+
         protected virtual void RaiseEvent(string eventName)
         {
             Dispatcher.Current.RaiseEvent(eventName, this, null);
@@ -25,7 +30,15 @@ namespace Meek.Business
     public abstract class BaseLogic<TDataSession> : BaseLogic
         where TDataSession : IDataSession
     {
-        protected abstract TDataSession DataSession { get; }
+        protected virtual TDataSession DataSession
+        {
+            get
+            {
+                if(Equals(DataSessionFactory, null))
+                    throw new NullReferenceException("DataSessionFactory");
+                return DataSessionFactory.CreateDataSession<TDataSession>();
+            }
+        }
     }
 
 }

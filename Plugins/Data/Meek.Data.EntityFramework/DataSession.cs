@@ -27,7 +27,6 @@ namespace Meek.Data.EntityFramework
         protected DataSession(DataProvider provider)
              :base(provider)
         {
-             
         }
         
         public virtual void Dispose()

@@ -37,6 +37,10 @@
     <AssemblyOriginatorKeyFile>studio032.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Meek, Version=1.0.0.0, Culture=neutral, PublicKeyToken=334ce273b5f41e36, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Meek.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,6 +52,8 @@
   <ItemGroup>
     <Compile Include="DataSessionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schema\Collection\DataSessionItemCollection.cs" />
+    <Compile Include="Schema\DataSessionItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Meek.Data\Meek.Data.csproj">

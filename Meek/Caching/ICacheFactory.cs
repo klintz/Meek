@@ -8,10 +8,16 @@
         /// <summary>
         /// Creates or Gets a Cache Instance
         /// </summary>
-        /// <param name="cacheName"></param>
-        /// <returns></returns>
+        /// <param name="cacheName">string</param>
+        /// <returns>ICache</returns>
         ICache GetCache(string cacheName);
-        
+
+        /// <summary>
+        /// Removes a Cache in the factory specified by the cache name
+        /// </summary>
+        /// <param name="cacheName">string</param>
+        void RemoveCache(string cacheName);
+
         /// <summary>
         /// Adds an instance variable to the Factory
         /// </summary>

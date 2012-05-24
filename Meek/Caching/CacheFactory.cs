@@ -30,8 +30,8 @@ namespace Meek.Caching
         /// <summary>
         /// Creates a New ICache
         /// </summary>
-        /// <param name="cacheName"></param>
-        /// <returns></returns>
+        /// <param name="cacheName">string</param>
+        /// <returns>ICache</returns>
         private ICache NewCache(string cacheName)
         {
             var cache = new Cache(cacheName);
@@ -44,13 +44,31 @@ namespace Meek.Caching
         /// <summary>
         /// Creates or Gets a Cache Instance
         /// </summary>
-        /// <param name="cacheName"></param>
-        /// <returns></returns>
+        /// <param name="cacheName">string</param>
+        /// <returns>ICache</returns>
         public ICache GetCache(string cacheName)
         {
+            if(Equals(cacheName, null))
+                throw new ArgumentNullException("cacheName");
+
             return CacheContainer.ContainsKey(cacheName)
                 ? CacheContainer[cacheName]
                 : NewCache(cacheName);
+        }
+        #endregion
+
+        #region RemoveCache
+        /// <summary>
+        /// Removes a Cache in the factory specified by the cache name
+        /// </summary>
+        /// <param name="cacheName">string</param>
+        public void RemoveCache(string cacheName)
+        {
+            if(Equals(cacheName, null))
+                throw new ArgumentNullException("cacheName");
+
+            if (CacheContainer.ContainsKey(cacheName))
+                CacheContainer.Remove(cacheName);
         }
         #endregion
 
@@ -76,7 +94,11 @@ namespace Meek.Caching
             GC.SuppressFinalize(this);
         }
 
-        public void Dispose(bool disposing)
+        /// <summary>
+        /// Triggered on instance dipose
+        /// </summary>
+        /// <param name="disposing">bool</param>
+        protected virtual void Dispose(bool disposing)
         {
             if(disposing)
             {

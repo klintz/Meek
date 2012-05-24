@@ -78,11 +78,11 @@ namespace Meek.Caching
                     var cacheItem = Container[key];
 
                     if (Equals(cacheItem.Expiration, default(DateTime)))
-                        return Container[key];
+                        return Container[key].Value;
                     
                     return (DateTime.Now >= cacheItem.Expiration) 
                         ? null
-                        : Container[key];
+                        : Container[key].Value;
                 }
                 return null;
             }

@@ -19,14 +19,14 @@ namespace Meek.Caching.Configuration
         }
 
         [
-        ConfigurationProperty("VariableElementCollection", IsDefaultCollection = false),
+        ConfigurationProperty("Variables", IsDefaultCollection = false),
         ConfigurationCollection(typeof(CacheFactoryVariableElementCollection), AddItemName = "addVariable", ClearItemsName = "clearVariables", RemoveItemName = "removeVariable")
         ]
         public CacheFactoryVariableElementCollection VariableElementCollection
         {
             get
             {
-                return this["VariableElementCollection"] as CacheFactoryVariableElementCollection;
+                return this["Variables"] as CacheFactoryVariableElementCollection;
             }
         }
     }

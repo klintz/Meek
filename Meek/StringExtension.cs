@@ -23,7 +23,7 @@ namespace Meek
         /// <param name="source">Source String</param>
         /// <param name="toCheck">String to Check</param>
         /// <param name="comparison">StringComparison constraint</param>
-        /// <returns></returns>
+        /// <returns>bool</returns>
         public static bool Contains(this string source, string toCheck, StringComparison comparison)
         {
             return source.IndexOf(toCheck, comparison) > 0;
@@ -35,7 +35,7 @@ namespace Meek
         /// Returns true if the source string is a valid Email Address Format
         /// </summary>
         /// <param name="source">String to Check format</param>
-        /// <returns></returns>
+        /// <returns>bool</returns>
         public static bool IsValidEmailAddress(this string source)
         {
             return new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$").IsMatch(source);
@@ -47,7 +47,7 @@ namespace Meek
         /// Checks if the String is a valid URL format
         /// </summary>
         /// <param name="source">String to Check</param>
-        /// <returns></returns>
+        /// <returns>bool</returns>
         public static bool IsValidUrl(this string source)
         {
             const string strRegex = "^(https?://)"
@@ -69,7 +69,7 @@ namespace Meek
         /// Checks if the URL string is available
         /// </summary>
         /// <param name="source">URL string</param>
-        /// <returns></returns>
+        /// <returns>bool</returns>
         public static bool UrlAvailable(this string source)
         {
             string httpUrl = source;
@@ -95,7 +95,7 @@ namespace Meek
         /// Reverse the source string
         /// </summary>
         /// <param name="source">String to be reversed</param>
-        /// <returns></returns>
+        /// <returns>string</returns>
         public static string Reverse(this string source)
         {
             char[] chars = source.ToCharArray();
@@ -122,7 +122,7 @@ namespace Meek
         /// <param name="source">source string</param>
         /// <param name="count">reduce length</param>
         /// <param name="endings">ending string</param>
-        /// <returns></returns>
+        /// <returns>string</returns>
         public static string Reduce(this string source, int count, string endings)
         {
             endings = endings ?? string.Empty;
@@ -147,7 +147,7 @@ namespace Meek
         /// Removes all emtpy spaces
         /// </summary>
         /// <param name="source">source string</param>
-        /// <returns></returns>
+        /// <returns>string</returns>
         public static string RemoveSpaces(this string source)
         {
             return source.Replace(" ", string.Empty);
@@ -160,7 +160,7 @@ namespace Meek
         /// </summary>
         /// <param name="source">source string</param>
         /// <param name="floatpoint">floating point flag</param>
-        /// <returns></returns>
+        /// <returns>bool</returns>
         public static bool IsNumber(this string source, bool floatpoint)
         {
             int i;
@@ -178,7 +178,7 @@ namespace Meek
         /// Checks if the string value is an integer
         /// </summary>
         /// <param name="source">source string</param>
-        /// <returns></returns>
+        /// <returns>bool</returns>
         public static bool IsInteger(this string source)
         {
             return IsNumber(source, false);
@@ -191,7 +191,7 @@ namespace Meek
         /// </summary>
         /// <param name="source">source string</param>
         /// <param name="floatpoint">float point flag</param>
-        /// <returns></returns>
+        /// <returns>bool</returns>
         public static bool IsNumberOnly(this string source, bool floatpoint)
         {
             var s = source.Trim();
@@ -206,6 +206,11 @@ namespace Meek
         #endregion
 
         #region IsIntegerOnly
+        /// <summary>
+        /// Checks if the string contains integers only
+        /// </summary>
+        /// <param name="source">source string</param>
+        /// <returns>bool</returns>
         public static bool IsIntegerOnly(this string source)
         {
             return IsNumberOnly(source, false);
@@ -213,6 +218,11 @@ namespace Meek
         #endregion
 
         #region RemoveDiacritics
+        /// <summary>
+        /// Removes diacritics character in a string
+        /// </summary>
+        /// <param name="source">string</param>
+        /// <returns>string</returns>
         public static string RemoveDiacritics(this string source)
         {
             var stFormD = source.Normalize(NormalizationForm.FormD);
@@ -229,6 +239,11 @@ namespace Meek
         #endregion
 
         #region Nl2Br
+        /// <summary>
+        /// Replaces strings line breaks with html tag <br />
+        /// </summary>
+        /// <param name="source">string</param>
+        /// <returns>string</returns>
         public static string Nl2Br(this string source)
         {
             return source.Replace("\r\n", "<br />").Replace("\n", "<br />");
@@ -236,6 +251,11 @@ namespace Meek
         #endregion
 
         #region MD5
+        /// <summary>
+        /// Converts string into MD5 hash
+        /// </summary>
+        /// <param name="source">string</param>
+        /// <returns>string</returns>
         public static string MD5(this string source)
         {
             _md5 = _md5 ?? new MD5CryptoServiceProvider();

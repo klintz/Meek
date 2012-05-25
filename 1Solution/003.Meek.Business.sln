@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meek.Business", "..\Meek.Bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Meek.Business", "..\Unit.Test\Test.Meek.Business\Test.Meek.Business.csproj", "{DE27F9D8-323A-40CC-8082-DCE0764F6FB9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "002.Plugins", "002.Plugins", "{8F3DE12C-4EA2-417B-8435-05F677ABDD3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

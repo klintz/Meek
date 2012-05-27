@@ -37,6 +37,10 @@
     <AssemblyOriginatorKeyFile>studio032.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Meek, Version=1.0.0.0, Culture=neutral, PublicKeyToken=334ce273b5f41e36, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Meek.dll</HintPath>
+    </Reference>
     <Reference Include="Meek.Business, Version=1.0.0.0, Culture=neutral, PublicKeyToken=334ce273b5f41e36, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bin\Meek.Business.dll</HintPath>
@@ -51,7 +55,9 @@
     <Reference Include="System.Web">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.ApplicationServices">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <Private>True</Private>
     </Reference>
@@ -82,12 +88,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="studio032.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Meek\Meek.csproj">
-      <Project>{9DF67A0D-9A75-4AB2-B7BE-3DAB43C293EB}</Project>
-      <Name>Meek</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -83,7 +83,15 @@
     <Compile Include="Event\IEventListener.cs" />
     <Compile Include="Linq\LinqExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\IMembershipUser.cs" />
+    <Compile Include="Security\IRoleProvider.cs" />
+    <Compile Include="Security\MembershipCreateStatus.cs" />
+    <Compile Include="Security\MembershipPasswordCompatibilityMode.cs" />
+    <Compile Include="Security\MembershipProvider.cs" />
+    <Compile Include="Security\MembershipUserList.cs" />
+    <Compile Include="Security\PasswordFormat.cs" />
     <Compile Include="Security\Cryptography\MD5CryptoServiceProvider.cs" />
+    <Compile Include="Security\IMembershipProvider.cs" />
     <Compile Include="StringExtension.cs" />
   </ItemGroup>
   <ItemGroup>

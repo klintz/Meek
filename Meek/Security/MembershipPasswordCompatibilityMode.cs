@@ -3,6 +3,7 @@
     public enum MembershipPasswordCompatibilityMode
     {
         Framework20,
-        Framework40
+        Framework40,
+        Framework45
     }
 }

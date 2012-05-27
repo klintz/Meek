@@ -88,6 +88,7 @@
     <Compile Include="Security\MembershipCreateStatus.cs" />
     <Compile Include="Security\MembershipPasswordCompatibilityMode.cs" />
     <Compile Include="Security\MembershipProvider.cs" />
+    <Compile Include="Security\MembershipUser.cs" />
     <Compile Include="Security\MembershipUserList.cs" />
     <Compile Include="Security\PasswordFormat.cs" />
     <Compile Include="Security\Cryptography\MD5CryptoServiceProvider.cs" />

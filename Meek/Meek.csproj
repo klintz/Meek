@@ -83,6 +83,7 @@
     <Compile Include="Event\IEventListener.cs" />
     <Compile Include="Linq\LinqExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Cryptography\RSACryptoServiceProvider.cs" />
     <Compile Include="Security\IMembershipUser.cs" />
     <Compile Include="Security\IRoleProvider.cs" />
     <Compile Include="Security\MembershipCreateStatus.cs" />

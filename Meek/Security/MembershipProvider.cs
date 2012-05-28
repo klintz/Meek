@@ -1,13 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using System.IO;
 
 namespace Meek.Security
 {
-    public abstract class MembershipProvider //: IMembershipProvider
+    public abstract class MembershipProvider : IMembershipProvider
     {
         private string _applicationName = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
 
@@ -51,5 +46,47 @@ namespace Meek.Security
         {
             return default(byte[]);
         }
+
+        public virtual byte[] EncryptPassword(byte[] password, MembershipPasswordCompatibilityMode legacyPasswordCompatibilityMode)
+        {
+            return null;
+        }
+
+        public virtual byte[] DecryptPassword(byte[] encodedPassword)
+        {
+            return null;
+        }
+
+        public abstract IMembershipUser CreateUser(string username, string password, string email,
+                                                   string passwordQuestion, string passwordAnswer, bool isApproved,
+                                                   object providerUserKey, out MembershipCreateStatus status);
+
+        public abstract bool DeleteUser(string username, bool deleteAllRelatedData);
+
+        public abstract MembershipUserList FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize,
+                                                            out int totalRecords);
+
+        public abstract MembershipUserList FindUsersByName(string usernameToMatch, int pageIndex, int pageSize,
+                                                           out int totalRecords);
+
+        public abstract MembershipUserList GetAllUsers(int pageIndex, int pageSize, out int totalRecords);
+
+        public abstract int GetNumberOfUsersOnline();
+
+        public abstract IMembershipUser GetUser(object providerUserKey, bool userIsOnline);
+
+        public abstract IMembershipUser GetUser(string username, bool userIsOnline);
+
+        public abstract string GetUserNameByEmail(string email);
+
+        public virtual bool RequiresQuestionAndAnswer { get { return true; } }
+
+        public virtual bool RequiresUniqueEmail { get { return true; } }
+
+        public abstract bool UnlockUser(string userName);
+
+        public abstract void UpdateUser(IMembershipUser user);
+
+        public abstract bool ValidateUser(string username, string password);
     }
 }

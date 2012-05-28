@@ -6,7 +6,7 @@ namespace Meek
 {
     public class Activator
     {
-        private delegate object CreateTypeDelegate();
+        private delegate object CreateTypeDelegate1();
         private static Dictionary<Type, Delegate> _createTypeDelegateCache;
 
         private static Dictionary<Type, Delegate> CreateTypeDelegateCache

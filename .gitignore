@@ -1,4 +1,4 @@
 *.dotCover
 *.suo
 *.user
-*
+_ReSharper.*

@@ -23,19 +23,6 @@ namespace Test.Meek.Security.Cryptography
         }
 
         [Test]
-        public void TestEncrypt()
-        {
-            const string expected = "password";
-            var encoding = new UnicodeEncoding();
-            var crypto = new RSACryptoServiceProvider();
-
-            var result1 = crypto.Encrypt(encoding.GetBytes(expected));
-            var result2 = crypto.Encrypt(encoding.GetBytes(expected));
-
-            Assert.IsTrue(result1 == result2);
-        }
-
-        [Test]
         public void TestEncryptDecrypt()
         {
             const string expected = "password";

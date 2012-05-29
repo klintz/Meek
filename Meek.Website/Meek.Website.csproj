@@ -157,9 +157,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\font\AurulentSans-Bold.otf" />
-    <None Include="Content\font\AurulentSans-Regular.otf" />
-    <None Include="Content\font\criticized.ttf" />
+    <Content Include="Content\font\AurulentSans-Bold.otf" />
+    <Content Include="Content\font\AurulentSans-Regular.otf" />
+    <Content Include="Content\font\criticized.ttf" />
     <None Include="studio032.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

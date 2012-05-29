@@ -76,6 +76,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\1140.css" />
+    <Content Include="Content\ie.css" />
+    <Content Include="Content\images\download-button.png" />
+    <Content Include="Content\images\meek-logo.png" />
+    <Content Include="Content\images\studio032-logo.png" />
+    <Content Include="Content\layout.css" />
+    <Content Include="Content\styles.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -121,7 +128,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -151,6 +157,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\font\AurulentSans-Bold.otf" />
+    <None Include="Content\font\AurulentSans-Regular.otf" />
+    <None Include="Content\font\criticized.ttf" />
     <None Include="studio032.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

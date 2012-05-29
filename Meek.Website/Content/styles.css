@@ -1,0 +1,135 @@
+@font-face {
+  font-family: "AurulentSans";
+  src: url("font/AurulentSans-Regular.otf") format("opentype");
+  }
+  @font-face {
+  font-family: "AurulentSans-Bold";
+  src: url("font/AurulentSans-Bold.otf") format("opentype");
+  }
+  
+@font-face {
+  font-family: "Criticized";
+  src: url("font/criticized.ttf") format("truetype");
+  }
+/* ============================== */
+/* ! Layout for desktop version   */
+/* ============================== */
+
+	body {
+		background: #ffffff;
+		font-family: Criticized, AurulentSans,Serif,Tahoma;
+	}
+	
+	.header-title{
+	  font-size: 2em;
+	  color: #272225;  
+	  font-weight: bold;
+	}
+	.row-2-font{
+	  color: #3b83ad;
+	  font-size: 11pt;
+	}
+	.row-3-font{
+	  color: #272225;
+	  font-size: 11pt;
+	}
+	.row-4-font{
+	  color: #ffffff;
+	  font-size: 11pt;
+	}
+	.row-5-font{
+	  color: #ffffff;
+	  font-family: Tahoma, Serif;
+	  font-size: 11pt;
+	}
+
+	.row-3-column-header{
+	  font-size: 2em;
+	  color: #272225;  
+	  text-shadow: 1px 1px 1px #484645;
+	  font-weight: bold;
+	}
+	.row-4-column-header{
+	  font-size: 2em;
+	  color: #FCFBE7;  
+	  text-shadow: 1px 1px 1px #484645;
+	  font-weight: bold;
+	}
+	.download-version-font{
+	  color: #ffffff;
+	  font-size: 11pt;
+	}
+
+	#row-header{
+	 }
+	#row-2{
+	  background: #272225;
+	}
+	#row-3{
+	  background: #91cc46;
+	}
+	#row-4{
+	  background: #272225;
+	}
+	#row-5{
+	  border-top: 2px solid #ffffff;
+	  background: #000000;
+	}
+	.menu{
+	  list-style: none;
+	}
+
+	.menu li a{
+	  text-decoration: none;
+	  color: #272225;
+	}
+
+	.menu li{
+	  float: left;
+	  padding: 10px 10px 5px 10px;
+	  margin: 0 0 5px 10px;
+	  border-bottom: 5px solid #3b83ad;
+	}
+	.menu li:hover{
+	  color: #ffffff;
+	  background: #91cc46;  
+	  border-bottom: 5px solid #3b83ad;
+	}
+	.menu li:hover a{
+	  color: #ffffff;
+	  background: #91cc46;  
+	}
+	.menu li.current{
+	  background: #91cc46;  
+	}
+	.menu li.current a{
+	  color: #ffffff;
+	}
+
+	
+
+/* ============================= */
+/* ! Layout for mobile version   */
+/* ============================= */
+
+@media handheld, only screen and (max-width: 767px) {
+
+	body {
+		
+	}
+
+}
+
+
+/* ========================================== */
+/* ! Provide higher res assets for iPhone 4   */
+/* ========================================== */
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) { 
+
+/*	.logo {
+		background: url(logo2x.jpg) no-repeat;
+		background-size: 212px 303px;
+	}*/
+
+}

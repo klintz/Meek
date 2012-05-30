@@ -1,6 +1,6 @@
 ﻿namespace Meek.Data
 {
-    public class DataSessionManager
+    public sealed class DataSessionManager
     {
         public static IDataSessionFactory DataSessionFactory { get; private set; }
 

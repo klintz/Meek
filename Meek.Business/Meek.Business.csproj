@@ -71,6 +71,7 @@
     <Compile Include="IBusinessFactory.cs" />
     <Compile Include="ILogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnableToCreateBusinessLogicException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="studio032.snk" />

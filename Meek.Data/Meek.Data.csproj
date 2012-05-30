@@ -76,6 +76,7 @@
     <Compile Include="IDataSession.cs" />
     <Compile Include="IDataSessionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnableToCreateDataSessionException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="studio032.snk" />

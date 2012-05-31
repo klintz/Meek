@@ -2,6 +2,12 @@
 {
     public class ViewConfigSource : IViewConfigSource
     {
+        public ViewConfigSource(string xmlSource)
+        {
+            
+        }
+
+
         public IViewConfig GetViewConfig(string viewName)
         {
             return default(IViewConfig);

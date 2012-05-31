@@ -4,10 +4,10 @@ using System.Xml.Serialization;
 namespace Meek.Web.Mvc.Schema
 {
     [Serializable]
-    [XmlRoot("View",
+    [XmlRoot("PartialView",
         Namespace = "http://www.meek-framework.com/",
         IsNullable = true)]
-    class ViewItem : IViewConfig
+    class PartialViewItem : IPartialViewConfig
     {
         [XmlElement("Name")]
         public string Name { get; set; }

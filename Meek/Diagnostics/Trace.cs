@@ -29,6 +29,7 @@ namespace Meek.Diagnostics
         {
             Loggers.Add(logger);
         }
+
         #region Write
         /// <summary>
         /// Writes the value of the object's ToString() method to the trace listeners in the Listeners collection.
@@ -336,9 +337,9 @@ namespace Meek.Diagnostics
         /// Type: System.Object[]
         /// An object array containing zero or more objects to format. 
         /// </param>
-        public static void WriteLine(string format, params object[] value)
+        public static void WriteLine(string format, params object[] args)
         {
-            Loggers.ForEach(l => l.WriteLine(format, value));
+            Loggers.ForEach(l => l.WriteLine(format, args));
         }
 
 

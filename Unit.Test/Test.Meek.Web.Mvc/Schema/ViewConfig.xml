@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ViewConfig xmlns="http://www.meek-framework.com/">
+  <Areas>
+    <Area Name="Admin">
+      <Views>
+        <View>
+          <Name>TestView</Name>
+          <File>TestView.cshtml</File>
+          <Themed>true</Themed>
+        </View>
+      </Views>
+      <PartialViews>
+        <PartialView>
+          <Name>TestView</Name>
+          <File>TestView.cshtml</File>
+          <Themed>true</Themed>
+        </PartialView>
+      </PartialViews>
+    </Area>
+    
+  </Areas>
+
+  <Views>
+    <View>
+      <Name>TestView</Name>
+      <File>TestView.cshtml</File>
+      <Themed>true</Themed>
+    </View>
+  </Views>
+
+  <PartialViews>
+    <PartialView>
+      <Name>TestView</Name>
+      <File>TestView.cshtml</File>
+      <Themed>true</Themed>
+    </PartialView>
+  </PartialViews>
+
+</ViewConfig>

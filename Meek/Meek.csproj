@@ -77,7 +77,9 @@
     <Compile Include="Caching\Events\ItemExpiredEventArgs.cs" />
     <Compile Include="Caching\ICache.cs" />
     <Compile Include="Caching\ICacheFactory.cs" />
-    <Compile Include="Diagnostics\Debug.cs" />
+    <Compile Include="Diagnostics\ILogger.cs" />
+    <Compile Include="Diagnostics\LogTypeEnum.cs" />
+    <Compile Include="Diagnostics\Trace.cs" />
     <Compile Include="Event\Dispatcher.cs" />
     <Compile Include="Event\EventListener.cs" />
     <Compile Include="Event\IEventListener.cs" />

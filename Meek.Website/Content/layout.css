@@ -1,0 +1,53 @@
+.fright{
+  float: right;
+}
+.fleft{
+  float: left;
+}
+
+.height-180{
+  height: 180px;
+}
+.height-200{
+  height: 200px;
+}
+.height-250{
+  height: 250px;
+}
+
+.align-center{
+  text-align: center;
+}
+.align-right{
+  text-align: right;
+}
+.justify{
+	text-align: justify;
+}
+.v-align-middle{
+	vertical-align: middle;
+}
+.padding-top-10{
+	padding-top: 10px;
+}
+.padding-top-20{
+	padding-top: 20px;
+}
+.padding-bottom-20{
+	padding-bottom: 20px;
+}
+.padding-bottom-40{
+	padding-bottom: 40px;
+}
+.min-width-252{
+	min-width: 252px;
+}
+.min-width-254{
+	min-width: 254px;
+}
+
+.width-100-percent {
+    width: 100%;
+}
+
+

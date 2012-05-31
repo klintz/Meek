@@ -5,8 +5,8 @@ using NUnit.Framework;
 
 namespace Test.Meek.Diagnostic
 {
-     [TestFixture]
-    public class TestDebug
+    [TestFixture]
+    public class TestTrace
     {
         #region Write
         [Test]

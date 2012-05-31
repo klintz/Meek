@@ -7,6 +7,11 @@
             
         }
 
+        internal ViewConfigSource()
+        {
+            
+        }
+
 
         public IViewConfig GetViewConfig(string viewName)
         {

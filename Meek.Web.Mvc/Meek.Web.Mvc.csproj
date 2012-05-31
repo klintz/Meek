@@ -89,7 +89,9 @@
     <Compile Include="IPartialViewConfig.cs" />
     <Compile Include="IViewConfig.cs" />
     <Compile Include="IViewConfigSource.cs" />
+    <Compile Include="Schema\AreaItem.cs" />
     <Compile Include="Schema\PartialViewItem.cs" />
+    <Compile Include="Schema\ViewConfig.cs" />
     <Compile Include="Schema\ViewItem.cs" />
     <Compile Include="View.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

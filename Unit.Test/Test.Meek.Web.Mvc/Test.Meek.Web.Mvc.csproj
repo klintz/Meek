@@ -54,12 +54,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schema\TestAreaItem.cs" />
+    <Compile Include="Schema\TestConfigViewSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Meek.Web.Mvc\Meek.Web.Mvc.csproj">
       <Project>{93AE9461-00F9-479B-9CE1-66B840DBDAB7}</Project>
       <Name>Meek.Web.Mvc</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Schema\TestArea.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Schema\ViewConfig.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

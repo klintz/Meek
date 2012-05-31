@@ -7,7 +7,7 @@ namespace Meek.Web.Mvc
     public class ExtendedRazorViewEngine : RazorViewEngine
     {
         private string _themesFolder = "~/Themes";
-
+        
         #region ConfigSource
         private IViewConfigSource _configSource;
         protected virtual IViewConfigSource ConfigSource
@@ -97,19 +97,16 @@ namespace Meek.Web.Mvc
 
             if (string.IsNullOrEmpty(viewName))
                 throw new ArgumentException("Value is required.", "viewName");
-
-            
-            var controllerName = controllerContext.RouteData.GetRequiredString("controller");
             
             string[] searchedViewLocations;
 
-            var viewPath = GetViewPath(ViewLocationFormats, viewName, Theme,
-                              controllerName, out searchedViewLocations);
+            var viewPath = GetViewPath(controllerContext, ViewLocationFormats, viewName, Theme,
+                out searchedViewLocations, useCache);
 
             if(!string.IsNullOrEmpty(viewPath))
                 return new ViewEngineResult(
                     (CreateView(controllerContext, viewPath, string.Empty)), this);
-
+            
             return base.FindView(controllerContext, viewName, masterName, useCache);
         }
         #endregion
@@ -124,10 +121,9 @@ namespace Meek.Web.Mvc
                 throw new ArgumentException("Value is required.", "partialViewName");
 
             string[] searchedLocations;
-            var controllerName = controllerContext.RouteData.GetRequiredString("controller");
 
-            var partialViewPath = GetPartialPath(PartialViewLocationFormats, partialViewName, Theme,
-                controllerName, out searchedLocations);
+            var partialViewPath = GetPartialPath(controllerContext, PartialViewLocationFormats, partialViewName, Theme,
+                out searchedLocations, useCache);
 
             if (!string.IsNullOrEmpty(partialViewPath))
                 return new ViewEngineResult(
@@ -139,62 +135,131 @@ namespace Meek.Web.Mvc
         #endregion
 
         #region GetViewPath
-        protected string GetViewPath(string[] locations, string viewName, string theme,
-            string controllerName, out string[] searchedLocations)
+        protected string GetViewPath(ControllerContext controllerContext, string[] locations, string viewName, string theme,
+            out string[] searchedLocations, bool useCache)
         {
             var view = ConfigSource.GetViewConfig(viewName);
             searchedLocations = null;
+
+            var controllerName = controllerContext.RouteData.GetRequiredString("controller");
+
+            if(useCache)
+            {
+                var key = CreateCacheKey("view",viewName, controllerName, theme);
+                return ViewLocationCache.GetViewLocation(controllerContext.HttpContext, key);
+            }
+
+            string path;
+
             if (view == null || !view.Active)
             {
                 searchedLocations = new string[locations.Length];
 
                 for (var i = 0; i < locations.Length; i++)
                 {
-                    var path = string.Format(CultureInfo.InvariantCulture, locations[i],
+                    path = string.Format(CultureInfo.InvariantCulture, locations[i],
                                          new object[] { viewName, controllerName });
                     if (VirtualPathProvider.FileExists(path))
                     {
                         searchedLocations = new string[0];
+
+                        var key = CreateCacheKey("view", viewName, controllerName, theme);
+                        ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
                         return path;
                     }
                     searchedLocations[i] = path;
                 }
                 return null;
             }
-
-            return (view.Themed)
-                ? string.Format("{0}/{1}/{2}", ThemesFolder, theme, view.File)
-                : view.File;
+            
+            if(view.Themed)
+            {
+                path = string.Format("{0}/{1}/{2}", ThemesFolder, theme, view.File);
+                if (VirtualPathProvider.FileExists(path))
+                {
+                    var key = CreateCacheKey("view", viewName, controllerName, theme);
+                    ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
+                    
+                }
+            }
+            else
+            {
+                path = view.File;
+                if (VirtualPathProvider.FileExists(path))
+                {
+                    var key = CreateCacheKey("view", viewName, controllerName, theme);
+                    ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
+                }
+            }
+            return path;
         }
         #endregion
 
         #region GetPartialPath
-        protected string GetPartialPath(string[] locations, string partialViewName, string theme,
-            string controllerName, out string[] searchedLocations)
+        protected string GetPartialPath(ControllerContext controllerContext, string[] locations, string partialViewName, string theme,
+            out string[] searchedLocations, bool useCache)
         {
             var partialView = ConfigSource.GetPartialViewConfig(partialViewName);
             searchedLocations = null;
+            var controllerName = controllerContext.RouteData.GetRequiredString("controller");
+
+            if (useCache)
+            {
+                var key = CreateCacheKey("partial", partialViewName, controllerName, theme);
+                return ViewLocationCache.GetViewLocation(controllerContext.HttpContext, key);
+            }
+            
+            string path;
             if (partialView == null || !partialView.Active)
             {
-
                 searchedLocations = new string[locations.Length];
 
                 for (var i = 0; i < locations.Length; i++)
                 {
-                    var path = string.Format(CultureInfo.InvariantCulture, locations[i],
+                    path = string.Format(CultureInfo.InvariantCulture, locations[i],
                                          new object[] { partialViewName, controllerName });
                     if (VirtualPathProvider.FileExists(path))
                     {
                         searchedLocations = new string[0];
+                        var key = CreateCacheKey("partial", partialViewName, controllerName, theme);
+                        ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
+
                         return path;
                     }
                     searchedLocations[i] = path;
                 }
                 return null;
             }
-            return (partialView.Themed)
-                ? string.Format("{0}/{1}/{2}", ThemesFolder, theme, partialView.File)
-                : partialView.File;
+
+            
+            if(partialView.Themed)
+            {
+                path = string.Format("{0}/{1}/{2}", ThemesFolder, theme, partialView.File);
+                if (VirtualPathProvider.FileExists(path))
+                {
+                    var key = CreateCacheKey("partial", partialViewName, controllerName, theme);
+                    ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
+                }
+            }
+            else
+            {
+                path = partialView.File;
+                if (VirtualPathProvider.FileExists(path))
+                {
+                    var key = CreateCacheKey("partial", partialViewName, controllerName, theme);
+                    ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
+                }
+            }
+            return path;
+        }
+        #endregion
+
+        #region CreateCacheKey
+        private string CreateCacheKey(string prefix, string name, string controllerName, string themeName)
+        {
+            return string.Format(CultureInfo.InvariantCulture,
+                ":ViewCacheEntry:{0}:{1}:{2}:{3}:{4}",
+                new object[] { GetType().AssemblyQualifiedName, prefix, name, controllerName, themeName });
         }
         #endregion
     }

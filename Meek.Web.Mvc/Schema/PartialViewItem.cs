@@ -7,8 +7,13 @@ namespace Meek.Web.Mvc.Schema
     [XmlRoot("PartialView",
         Namespace = "http://www.meek-framework.com/",
         IsNullable = true)]
-    class PartialViewItem : IPartialViewConfig
+    public class PartialViewItem : IPartialViewConfig
     {
+        public PartialViewItem()
+        {
+            Active = true;
+        }
+
         [XmlElement("Name")]
         public string Name { get; set; }
 

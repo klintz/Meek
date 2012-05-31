@@ -7,8 +7,13 @@ namespace Meek.Web.Mvc.Schema
     [XmlRoot("View",
         Namespace = "http://www.meek-framework.com/",
         IsNullable = true)]
-    class ViewItem : IViewConfig
+    public class ViewItem : IViewConfig
     {
+        public ViewItem()
+        {
+            Active = true;
+        }
+
         [XmlElement("Name")]
         public string Name { get; set; }
 

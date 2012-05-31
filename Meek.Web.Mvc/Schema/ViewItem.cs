@@ -10,7 +10,7 @@ namespace Meek.Web.Mvc.Schema
     [XmlRoot("ViewItem",
         Namespace = "http://www.meek-framework.com/",
         IsNullable = true)]
-    public class ViewItem
+    class ViewItem : IViewConfig
     {
         [XmlElement("Name")]
         public string Name { get; set; }
@@ -20,5 +20,8 @@ namespace Meek.Web.Mvc.Schema
 
         [XmlElement("Themed")]
         public bool Themed { get; set; }
+
+        [XmlElement("Active")]
+        public bool Active { get; set; }
     }
 }

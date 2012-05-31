@@ -9,7 +9,17 @@ namespace Meek.Web.Mvc
     
     public class ViewConfigSource : IViewConfigSource
     {
-        private ViewConfig Config { get; set; }
+        private ViewConfig _config;
+
+        private ViewConfig Config
+        {
+            get 
+            { 
+                _config = _config ?? new ViewConfig();
+                return _config; 
+            }
+            set { _config = value; }
+        }
 
         public static ViewConfigSource Create(string xmlSource)
         {

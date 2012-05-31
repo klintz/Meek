@@ -146,7 +146,9 @@ namespace Meek.Web.Mvc
             if(useCache)
             {
                 var key = CreateCacheKey("view",viewName, controllerName, theme);
-                return ViewLocationCache.GetViewLocation(controllerContext.HttpContext, key);
+                var location = ViewLocationCache.GetViewLocation(controllerContext.HttpContext, key);
+                if (!string.IsNullOrEmpty(location))
+                    return location;
             }
 
             string path;
@@ -206,7 +208,9 @@ namespace Meek.Web.Mvc
             if (useCache)
             {
                 var key = CreateCacheKey("partial", partialViewName, controllerName, theme);
-                return ViewLocationCache.GetViewLocation(controllerContext.HttpContext, key);
+                var location = ViewLocationCache.GetViewLocation(controllerContext.HttpContext, key);
+                if (!string.IsNullOrEmpty(location))
+                    return location;
             }
             
             string path;

@@ -8,19 +8,23 @@ namespace Meek.Web.Mvc.Schema
     [XmlRoot("ViewConfig",
         Namespace = "http://www.meek-framework.com/",
         IsNullable = true)]
-    public class ViewConfig
+    public class ViewConfigSchema
     {
-        private List<AreaItem> _areas;
+        private List<ViewConfigSchema> _areas;
         private List<ViewItem> _views;
         private List<PartialViewItem> _partials;
+        private List<MasterItem> _masters;
+
+        [XmlAttribute("Name")]
+        public string Name { get; set; }
 
         [XmlArray("Areas")]
         [XmlArrayItem("Area")]
-        public List<AreaItem> Areas 
+        public List<ViewConfigSchema> Areas 
         {
             get 
-            { 
-                _areas = _areas ?? new List<AreaItem>();
+            {
+                _areas = _areas ?? new List<ViewConfigSchema>();
                 return _areas;
             }
             set 
@@ -56,6 +60,21 @@ namespace Meek.Web.Mvc.Schema
             set
             {
                 _partials = value;
+            }
+        }
+
+        [XmlArray("Masters")]
+        [XmlArrayItem("Master")]
+        public List<MasterItem> Masters
+        {
+            get
+            {
+                _masters = _masters ?? new List<MasterItem>();
+                return _masters;
+            }
+            set
+            {
+                _masters = value;
             }
         }
     }

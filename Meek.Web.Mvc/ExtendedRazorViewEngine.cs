@@ -37,56 +37,6 @@ namespace Meek.Web.Mvc
         #endregion
 
         #region Constructor
-        public ExtendedRazorViewEngine()
-        {
-            //Areas
-            AreaViewLocationFormats = new[] {
-                "~/Areas/{2}/{1}/{0}.cshtml",
-                "~/Areas/{2}/{1}/{0}.vbhtml",
-                "~/Areas/{2}/Shared/{0}.cshtml",
-                "~/Areas/{2}/Shared/{0}.vbhtml"
-            };
-
-            AreaMasterLocationFormats = new[] {
-                "~/Areas/{2}/{1}/{0}.cshtml",
-                "~/Areas/{2}/{1}/{0}.vbhtml",
-                "~/Areas/{2}/Shared/{0}.cshtml",
-                "~/Areas/{2}/Shared/{0}.vbhtml"
-            };
-
-            AreaPartialViewLocationFormats = new[] {
-                "~/Areas/{2}/{1}/{0}.cshtml",
-                "~/Areas/{2}/{1}/{0}.vbhtml",
-                "~/Areas/{2}/Shared/{0}.cshtml",
-                "~/Areas/{2}/Shared/{0}.vbhtml"
-            };
-
-            //Root
-            ViewLocationFormats = new[] {
-                "~/{0}.cshtml",
-                "~/{0}.vbhtml",
-                "~/{1}/{0}.cshtml",
-                "~/{1}/{0}.vbhtml"
-            };
-
-            PartialViewLocationFormats = new[]{
-                "~/{0}.cshtml",
-                "~/{0}.vbhtml",
-                "~/{1}/{0}.cshtml",
-                "~/{1}/{0}.vbhtml",
-                "~/Controls/{0}.cshtml",
-                "~/Controls/{0}.vbhtml"
-            };
-
-            MasterLocationFormats = new[] {
-                "~/{0}.cshtml",
-                "~/{0}.vbhtml",
-                "~/{1}/{0}.cshtml",
-                "~/{1}/{0}.vbhtml",
-                "~/Shared/{0}.cshtml",
-                "~/Shared/{0}.vbhtml"
-            };
-        }
         #endregion
 
         #region FindView
@@ -99,13 +49,23 @@ namespace Meek.Web.Mvc
                 throw new ArgumentException("Value is required.", "viewName");
             
             string[] searchedViewLocations;
+            
+            string customMasterName;
 
             var viewPath = GetViewPath(controllerContext, ViewLocationFormats, viewName, Theme,
-                out searchedViewLocations, useCache);
+                out searchedViewLocations, out customMasterName, useCache);
 
-            if(!string.IsNullOrEmpty(viewPath))
+            var masterPath = string.Empty;
+            if(!string.IsNullOrEmpty(customMasterName))
+            {
+                string[] searchedMasterLocations;
+                masterPath = GetMasterPath(controllerContext, MasterLocationFormats, customMasterName, viewName, Theme,
+                                           out searchedMasterLocations, useCache);
+            }
+
+            if (!string.IsNullOrEmpty(viewPath))
                 return new ViewEngineResult(
-                    (CreateView(controllerContext, viewPath, string.Empty)), this);
+                    (CreateView(controllerContext, viewPath, masterPath)), this);
             
             return base.FindView(controllerContext, viewName, masterName, useCache);
         }
@@ -136,23 +96,33 @@ namespace Meek.Web.Mvc
 
         #region GetViewPath
         protected string GetViewPath(ControllerContext controllerContext, string[] locations, string viewName, string theme,
-            out string[] searchedLocations, bool useCache)
+            out string[] searchedLocations, out string masterName, bool useCache)
         {
-            var view = ConfigSource.GetViewConfig(viewName);
+            var area = controllerContext.RouteData.DataTokens.ContainsKey("area")
+                           ? controllerContext.RouteData.DataTokens["area"].ToString()
+                           : string.Empty;
+
+            var config = ConfigSource.GetAreaConfig(area) ?? ConfigSource;
+
+            var view = config.GetViewConfig(viewName);
+
             searchedLocations = null;
+            masterName = null;
+
+            if (view != null)
+                masterName = view.Master;
 
             var controllerName = controllerContext.RouteData.GetRequiredString("controller");
-
+            
             if(useCache)
             {
-                var key = CreateCacheKey("view",viewName, controllerName, theme);
+                var key = CreateCacheKey("view", area, viewName, controllerName, theme);
                 var location = ViewLocationCache.GetViewLocation(controllerContext.HttpContext, key);
                 if (!string.IsNullOrEmpty(location))
                     return location;
             }
 
-            string path;
-
+            var path = string.Empty;
             if (view == null || !view.Active)
             {
                 searchedLocations = new string[locations.Length];
@@ -165,13 +135,13 @@ namespace Meek.Web.Mvc
                     {
                         searchedLocations = new string[0];
 
-                        var key = CreateCacheKey("view", viewName, controllerName, theme);
+                        var key = CreateCacheKey("view", area, viewName, controllerName, theme);
                         ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
                         return path;
                     }
                     searchedLocations[i] = path;
                 }
-                return null;
+                return path;
             }
             
             if(view.Themed)
@@ -179,9 +149,8 @@ namespace Meek.Web.Mvc
                 path = string.Format("{0}/{1}/{2}", ThemesFolder, theme, view.File);
                 if (VirtualPathProvider.FileExists(path))
                 {
-                    var key = CreateCacheKey("view", viewName, controllerName, theme);
+                    var key = CreateCacheKey("view", area, viewName, controllerName, theme);
                     ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
-                    
                 }
             }
             else
@@ -189,7 +158,7 @@ namespace Meek.Web.Mvc
                 path = view.File;
                 if (VirtualPathProvider.FileExists(path))
                 {
-                    var key = CreateCacheKey("view", viewName, controllerName, theme);
+                    var key = CreateCacheKey("view", area, viewName, controllerName, theme);
                     ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
                 }
             }
@@ -201,19 +170,25 @@ namespace Meek.Web.Mvc
         protected string GetPartialPath(ControllerContext controllerContext, string[] locations, string partialViewName, string theme,
             out string[] searchedLocations, bool useCache)
         {
-            var partialView = ConfigSource.GetPartialViewConfig(partialViewName);
+            var area = controllerContext.RouteData.DataTokens.ContainsKey("area")
+                           ? controllerContext.RouteData.DataTokens["area"].ToString()
+                           : string.Empty;
+
+            var config = ConfigSource.GetAreaConfig(area) ?? ConfigSource;
+
+            var partialView = config.GetPartialViewConfig(partialViewName);
             searchedLocations = null;
             var controllerName = controllerContext.RouteData.GetRequiredString("controller");
 
             if (useCache)
             {
-                var key = CreateCacheKey("partial", partialViewName, controllerName, theme);
+                var key = CreateCacheKey("partial", area, partialViewName, controllerName, theme);
                 var location = ViewLocationCache.GetViewLocation(controllerContext.HttpContext, key);
                 if (!string.IsNullOrEmpty(location))
                     return location;
             }
-            
-            string path;
+
+            var path = string.Empty;
             if (partialView == null || !partialView.Active)
             {
                 searchedLocations = new string[locations.Length];
@@ -225,14 +200,14 @@ namespace Meek.Web.Mvc
                     if (VirtualPathProvider.FileExists(path))
                     {
                         searchedLocations = new string[0];
-                        var key = CreateCacheKey("partial", partialViewName, controllerName, theme);
+                        var key = CreateCacheKey("partial", area, partialViewName, controllerName, theme);
                         ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
 
                         return path;
                     }
                     searchedLocations[i] = path;
                 }
-                return null;
+                return path;
             }
 
             
@@ -241,7 +216,7 @@ namespace Meek.Web.Mvc
                 path = string.Format("{0}/{1}/{2}", ThemesFolder, theme, partialView.File);
                 if (VirtualPathProvider.FileExists(path))
                 {
-                    var key = CreateCacheKey("partial", partialViewName, controllerName, theme);
+                    var key = CreateCacheKey("partial", area, partialViewName, controllerName, theme);
                     ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
                 }
             }
@@ -250,7 +225,74 @@ namespace Meek.Web.Mvc
                 path = partialView.File;
                 if (VirtualPathProvider.FileExists(path))
                 {
-                    var key = CreateCacheKey("partial", partialViewName, controllerName, theme);
+                    var key = CreateCacheKey("partial", area, partialViewName, controllerName, theme);
+                    ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
+                }
+            }
+            return path;
+        }
+        #endregion
+
+        #region GetMasterPath
+        protected string GetMasterPath(ControllerContext controllerContext, string[] locations, string masterName, string viewName,
+            string theme, out string[] searchedLocations, bool useCache)
+        {
+            var area = controllerContext.RouteData.DataTokens.ContainsKey("area")
+                           ? controllerContext.RouteData.DataTokens["area"].ToString()
+                           : string.Empty;
+            
+            var config = ConfigSource.GetAreaConfig(area) ?? ConfigSource;
+
+            var master = config.GetMasterConfig(masterName);
+
+            searchedLocations = null;
+            var controllerName = controllerContext.RouteData.GetRequiredString("controller");
+
+            if (useCache)
+            {
+                var key = CreateCacheKey("master", area, masterName, controllerName, theme);
+                var location = ViewLocationCache.GetViewLocation(controllerContext.HttpContext, key);
+                if (!string.IsNullOrEmpty(location))
+                    return location;
+            }
+
+            var path = string.Empty;
+            if (master == null || !master.Active)
+            {
+                searchedLocations = new string[locations.Length];
+
+                for (var i = 0; i < locations.Length; i++)
+                {
+                    path = string.Format(CultureInfo.InvariantCulture, locations[i],
+                                         new object[] { viewName, controllerName, theme });
+                    if (VirtualPathProvider.FileExists(path))
+                    {
+                        searchedLocations = new string[0];
+                        var key = CreateCacheKey("master", area, masterName, controllerName, theme);
+                        ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
+                        return path;
+                    }
+                    searchedLocations[i] = path;
+                }
+                return path;
+            }
+
+            
+            if (master.Themed)
+            {
+                path = string.Format("{0}/{1}/{2}", ThemesFolder, theme, master.File);
+                if (VirtualPathProvider.FileExists(path))
+                {
+                    var key = CreateCacheKey("master", area, masterName, controllerName, theme);
+                    ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
+                }
+            }
+            else
+            {
+                path = master.File;
+                if (VirtualPathProvider.FileExists(path))
+                {
+                    var key = CreateCacheKey("master", area, masterName, controllerName, theme);
                     ViewLocationCache.InsertViewLocation(controllerContext.HttpContext, key, path);
                 }
             }
@@ -259,11 +301,11 @@ namespace Meek.Web.Mvc
         #endregion
 
         #region CreateCacheKey
-        private string CreateCacheKey(string prefix, string name, string controllerName, string themeName)
+        private string CreateCacheKey(string prefix, string area, string name, string controllerName, string themeName)
         {
             return string.Format(CultureInfo.InvariantCulture,
-                ":ViewCacheEntry:{0}:{1}:{2}:{3}:{4}",
-                new object[] { GetType().AssemblyQualifiedName, prefix, name, controllerName, themeName });
+                ":ViewCacheEntry:{0}:{1}:{2}:{3}:{4}:{5}",
+                new object[] { GetType().AssemblyQualifiedName, prefix, area, name, controllerName, themeName });
         }
         #endregion
     }

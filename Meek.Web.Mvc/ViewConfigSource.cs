@@ -9,13 +9,13 @@ namespace Meek.Web.Mvc
     
     public class ViewConfigSource : IViewConfigSource
     {
-        private ViewConfig _config;
+        private ViewConfigSchema _config;
 
-        private ViewConfig Config
+        private ViewConfigSchema Config
         {
             get 
             { 
-                _config = _config ?? new ViewConfig();
+                _config = _config ?? new ViewConfigSchema();
                 return _config; 
             }
             set { _config = value; }
@@ -28,9 +28,9 @@ namespace Meek.Web.Mvc
             Stream stream = null;
             try
             {
-                var serializer = new XmlSerializer(typeof(ViewConfig));
+                var serializer = new XmlSerializer(typeof(ViewConfigSchema));
                 stream = new FileStream(xmlSource, FileMode.Open);
-                var result = serializer.Deserialize(stream) as ViewConfig;
+                var result = serializer.Deserialize(stream) as ViewConfigSchema;
 
                 if(result == null)
                     throw new Exception("Unable to create ViewConfigSource out of the xml file.");
@@ -60,7 +60,18 @@ namespace Meek.Web.Mvc
             return Config.PartialViews.SingleOrDefault(x => x.Name == partialViewName);
         }
 
-        
+        public IMasterConfig GetMasterConfig(string masterName)
+        {
+            return Config.Masters.SingleOrDefault(x => x.Name == masterName);
+        }
 
+        public IViewConfigSource GetAreaConfig(string areaName)
+        {
+            if (string.IsNullOrEmpty(areaName))
+                return default(IViewConfigSource);
+            var source = Config.Areas.SingleOrDefault(x => x.Name == areaName);
+            var viewConfigSource = new ViewConfigSource {Config = source};
+            return viewConfigSource;
+        }
     }
 }

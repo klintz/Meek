@@ -4,12 +4,12 @@ using System.Xml.Serialization;
 namespace Meek.Web.Mvc.Schema
 {
     [Serializable]
-    [XmlRoot("View",
+    [XmlRoot("Master",
         Namespace = "http://www.meek-framework.com/",
         IsNullable = true)]
-    public class ViewItem : IViewConfig
+    public class MasterItem : IMasterConfig
     {
-        public ViewItem()
+        public MasterItem()
         {
             Active = true;
         }
@@ -19,9 +19,6 @@ namespace Meek.Web.Mvc.Schema
 
         [XmlElement("File")]
         public string File { get; set; }
-
-        [XmlElement("Master")]
-        public string Master { get; set; }
 
         [XmlElement("Themed")]
         public bool Themed { get; set; }
